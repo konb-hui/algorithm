@@ -4,6 +4,7 @@ import com.konb.algorithm.day.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author konb
@@ -30,11 +31,29 @@ public class DifferentBinarySearchTrees {
                 int k = i - j - 1;
                 List<TreeNode> treeNodes = dp.get(j);
                 for (int l = 0; l < treeNodes.size(); l ++) {
+                    TreeNode node = new TreeNode();
+                    boolean flag = false;
                     if (l == 0 && treeNodes.get(l) == null) {
-                        break;
+                        flag = true;
                     } else {
+                        node = treeNodes.get(l);
+                    }
+
+                    TreeNode temp = node;
+                    if (flag) {
+                        node.val = i;
+                    } else {
+                        while (temp.right != null) {
+                            temp = temp.right;
+                        }
+                        temp.right = new TreeNode(i);
+                        temp = temp.right;
+                    }
+
+                    for (TreeNode b : dp.get(k)) {
 
                     }
+
                 }
             }
         }
