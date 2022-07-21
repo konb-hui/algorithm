@@ -3,6 +3,7 @@ package com.konb.algorithm.day._20220720;
 import com.konb.algorithm.day.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -15,50 +16,32 @@ import java.util.TreeMap;
 public class DifferentBinarySearchTrees {
 
     public List<TreeNode> generateTrees(int n) {
-        List<List<TreeNode>> dp = new ArrayList<>();
+        if (n == 0) {
+            return new LinkedList<>();
+        }
+        return generateTrees(1, n);
+    }
 
-        List<TreeNode> list0 = new ArrayList<>();
-        list0.add(null);
-        dp.add(list0);
+    public List<TreeNode> generateTrees(int start, int end) {
+        List<TreeNode> list = new LinkedList<>();
+        if (start > end) {
+            list.add(null);
+            return list;
+        }
+        for (int i = start; i <= end; i ++) {
+            List<TreeNode> leftTree = generateTrees(start, i - 1);
+            List<TreeNode> rightTree = generateTrees(i + 1, end);
 
-        List<TreeNode> list1 = new ArrayList<>();
-        list1.add(new TreeNode(1));
-        dp.add(list1);
-
-        for (int i = 2; i <= n; i ++) {
-            List<TreeNode> list = new ArrayList<>();
-            for (int j = 0; j <= i; j ++) {
-                int k = i - j - 1;
-                List<TreeNode> treeNodes = dp.get(j);
-                for (int l = 0; l < treeNodes.size(); l ++) {
-                    TreeNode node = new TreeNode();
-                    boolean flag = false;
-                    if (l == 0 && treeNodes.get(l) == null) {
-                        flag = true;
-                    } else {
-                        node = treeNodes.get(l);
-                    }
-
-                    TreeNode temp = node;
-                    if (flag) {
-                        node.val = i;
-                    } else {
-                        while (temp.right != null) {
-                            temp = temp.right;
-                        }
-                        temp.right = new TreeNode(i);
-                        temp = temp.right;
-                    }
-
-                    for (TreeNode b : dp.get(k)) {
-
-                    }
-
+            for (TreeNode a : leftTree) {
+                for (TreeNode b : rightTree) {
+                    TreeNode node = new TreeNode(i);
+                    node.left = a;
+                    node.right = b;
+                    list.add(node);
                 }
             }
         }
-
-        return dp.get(n);
+        return list;
     }
 
 }
