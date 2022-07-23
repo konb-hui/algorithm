@@ -57,8 +57,6 @@ public class AchieveIndexOf {
 
         return map;
     }
-//"mississippi"
-//        "issipi"
     public static void main(String[] args) {
         AchieveIndexOf achieveIndexOf = new AchieveIndexOf();
         System.out.println(achieveIndexOf.strStr("mississipii", "issipi"));
