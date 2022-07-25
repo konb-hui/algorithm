@@ -29,13 +29,21 @@ public class AlignTextLeftAndRight {
             }
 
             if (length > maxWidth) {
-                int wordLength = length - l - (i - start - 1);
+                int wordLength = length - l - (i - start );
                 int blankLength = maxWidth - wordLength;
                 i --;
                 int wordNum = i - start;
 
-                int average = blankLength / wordNum;
-                int more = blankLength % wordNum;
+                int average = 0;
+                int more = 0;
+                boolean flag = false;
+                if (wordNum <= 0) {
+                    more = blankLength;
+                    flag = true;
+                } else {
+                    average = blankLength / wordNum;
+                    more = blankLength % wordNum;
+                }
 
                 for (int a = start; a < i; a ++) {
                     stringBuilder.append(words[a]);
@@ -49,36 +57,26 @@ public class AlignTextLeftAndRight {
                     }
                 }
                 stringBuilder.append(words[i]);
+                if (flag) {
+                    for (int a = 0; a < more; a ++) {
+                        stringBuilder.append(" ");
+                    }
+                }
                 result.add(stringBuilder.toString());
                 length = 0;
                 stringBuilder = new StringBuilder();
-
-                continue;
-
-            }
-
-            if (i == words.length - 1) {
-                int wordLength = length - l - (i - start);
-                int blankLength = maxWidth - wordLength;
-                int wordNum = i - start;
-
-                int average = blankLength / wordNum;
-                int more = blankLength % wordNum;
-
-                for (int a = start; a < i; a ++) {
+            } else if (i == words.length - 1) {
+                for (int a = start; a <= i; a ++) {
                     stringBuilder.append(words[a]);
-                    for (int b = 0; b < average; b ++) {
+                    if (a < i) {
                         stringBuilder.append(" ");
-                    }
-
-                    if (more > 0) {
-                        stringBuilder.append(" ");
-                        more --;
                     }
                 }
-                stringBuilder.append(words[i]);
+                int blankNum = maxWidth - stringBuilder.length();
+                for (int a = 0; a < blankNum; a ++) {
+                    stringBuilder.append(" ");
+                }
                 result.add(stringBuilder.toString());
-                length = 0;
             }
             i ++;
         }
@@ -86,9 +84,11 @@ public class AlignTextLeftAndRight {
         return result;
     }
 
+//    ["What","must","be","acknowledgment","shall","be"]
+//            16
     public static void main(String[] args) {
         AlignTextLeftAndRight alignTextLeftAndRight = new AlignTextLeftAndRight();
-        List<String> list = alignTextLeftAndRight.fullJustify(new String[] {"This", "is", "an", "example", "of", "text", "justification."}, 16);
+        List<String> list = alignTextLeftAndRight.fullJustify(new String[] {"What","must","be","acknowledgment","shall","be"}, 16);
 
         for (String s : list) {
             System.out.println(s);
