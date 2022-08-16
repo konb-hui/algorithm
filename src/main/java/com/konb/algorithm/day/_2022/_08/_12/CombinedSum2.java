@@ -27,6 +27,9 @@ public class CombinedSum2 {
 
     private void doSome(List<List<Integer>> r, List<Integer> list, int index, int[] candidates, int sum, int target) {
         for (int i = index; i < candidates.length; i ++) {
+            if (i > index && candidates[i] == candidates[i - 1]) {
+                continue;
+            }
             int a = candidates[i];
             int newSum = sum + a;
             if (newSum == target) {
