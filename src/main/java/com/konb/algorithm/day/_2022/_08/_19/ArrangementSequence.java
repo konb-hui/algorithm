@@ -17,11 +17,14 @@ public class ArrangementSequence {
         while (n > 0) {
             int sum = sum(n - 1);
             int a = k / sum;
+            if (k % sum == 0) {
+                a --;
+            }
 
             stringBuilder.append(list.remove(a));
 
             n --;
-            k -= sum - 1;
+            k -= a * sum;
         }
 
         return stringBuilder.toString();
@@ -45,12 +48,12 @@ public class ArrangementSequence {
 
     public static void main(String[] args) {
         ArrangementSequence arrangementSequence = new ArrangementSequence();
-//        System.out.println(arrangementSequence.getPermutation(3, 1));
-//        System.out.println(arrangementSequence.getPermutation(3, 2));
-//        System.out.println(arrangementSequence.getPermutation(3, 3));
-//        System.out.println(arrangementSequence.getPermutation(3, 4));
-        System.out.println(arrangementSequence.getPermutation(3, 5));
-        System.out.println(arrangementSequence.getPermutation(3, 6));
+        System.out.println(arrangementSequence.getPermutation(4, 1));
+        System.out.println(arrangementSequence.getPermutation(4, 2));
+        System.out.println(arrangementSequence.getPermutation(4, 3));
+        System.out.println(arrangementSequence.getPermutation(4, 4));
+        System.out.println(arrangementSequence.getPermutation(4, 5));
+        System.out.println(arrangementSequence.getPermutation(4, 6));
     }
 
 }
